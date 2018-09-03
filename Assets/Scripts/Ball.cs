@@ -6,13 +6,18 @@ public class Ball : MonoBehaviour {
 
     // Use this for initialization
     Vector3 startPos;
+    Rigidbody2D ballBody;
 	void Start () {
         startPos = transform.position;
+        ballBody = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(ballBody.velocity.magnitude < .1f)
+        {
+            ballBody.velocity = Vector2.zero;
+        }
 	}
 
     void OnCollisionEnter2D(Collision2D target)

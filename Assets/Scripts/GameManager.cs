@@ -6,11 +6,16 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager refrence;
 
-    public enum Turn { player1, player2 };
+    public enum Turn { team1, team2 };
     public Turn turn;
+    public enum GameState { moving, frozen };
+    public GameState gameState;
+    public bool shouldCheckState;
+
     public GameObject[] allPlayers;
     public GameObject[] playersTeam1;
     public GameObject[] playersTeam2;
+    public GameObject ball;
     public int index;
 
     public Vector3[] startPos;
@@ -21,9 +26,14 @@ public class GameManager : MonoBehaviour {
     public Text redTeamScore;
     public bool goalHappen = false;
 
+    public enum Mode { pvp, pvc, cvc }; // player vs player or player vs code or code vs code
+    public Mode gameMode;
+
+    public bool AplayerIsMoving;
+
     void Awake()
     {
-        if(refrence == null)
+        if (refrence == null)
         {
             refrence = this;
         }
@@ -35,16 +45,60 @@ public class GameManager : MonoBehaviour {
         team1Score = team2Score = 0;
     }
 
-    void Start () {
-        turn = Turn.player1;
-    }
-	
-	
-	void Update () {
-        
-        
+    void Start() {
+        turn = Turn.team1;
+        shouldCheckState = false;
+        for (int i = 0; i < allPlayers.Length; i++)
+        {
+            allPlayers[i].GetComponent<PlayerController>().activePlayer();
+        }
     }
 
+
+    void Update() {
+        checkGameState();
+
+    }
+
+    public void checkGameState()
+    {
+        if(gameState == GameState.moving && shouldCheckState)
+        {
+            for (int i = 0; i < allPlayers.Length; i++)
+            {
+                if (allPlayers[i].GetComponent<Rigidbody2D>().velocity.magnitude > .1f)
+                {
+                    return;
+                }
+            }
+            if (ball.GetComponent<Rigidbody2D>().velocity.magnitude > .1f)
+            {
+                return;
+            }
+            changeTurn();
+            shouldCheckState = false;
+            gameState = GameState.frozen;
+            
+            
+        }
+    }
+
+
+    public void changeTurn()
+    {
+        if(turn == Turn.team1)
+        {
+            turn = Turn.team2;
+        }
+        else
+        {
+            turn = Turn.team1;
+        }
+        for (int i = 0; i < allPlayers.Length; i++)
+        {
+            allPlayers[i].GetComponent<PlayerController>().activePlayer();
+        }
+    }
 
     public void Goal(int index)
     {
@@ -64,5 +118,7 @@ public class GameManager : MonoBehaviour {
         }
         goalHappen = false;
     }
+
+
 
 }

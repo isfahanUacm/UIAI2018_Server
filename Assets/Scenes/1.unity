@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -220,6 +220,10 @@ Prefab:
       propertyPath: m_Color.b
       value: 0.1397059
       objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
   m_IsPrefabParent: 0
@@ -335,6 +339,10 @@ Prefab:
       propertyPath: m_Name
       value: player3
       objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
   m_IsPrefabParent: 0
@@ -395,6 +403,10 @@ Prefab:
     - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
       propertyPath: m_Name
       value: player5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
@@ -533,6 +545,10 @@ Prefab:
         type: 2}
       propertyPath: m_Color.b
       value: 0.1397059
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
@@ -889,6 +905,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -1031,6 +1048,10 @@ Prefab:
         type: 2}
       propertyPath: m_Color.b
       value: 0.1397059
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
@@ -1365,7 +1386,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1332351628}
   - component: {fileID: 1332351627}
-  - component: {fileID: 1332351629}
   m_Layer: 0
   m_Name: field
   m_TagString: Untagged
@@ -1386,6 +1406,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -1406,7 +1427,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 74bcec18234d7954eb22c6958ad4471c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1430,31 +1451,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!61 &1332351629
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1332351626}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 9570a5bb8f2c8484daa6b931dc147a24, type: 2}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.333333, y: 6.5333333}
-    newSize: {x: 14, y: 9.8}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 9.333333, y: 6.5333333}
-  m_EdgeRadius: 0
 --- !u!1 &1345200484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,6 +1602,10 @@ Prefab:
       propertyPath: m_Color.b
       value: 0.1397059
       objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
   m_IsPrefabParent: 0
@@ -1677,6 +1677,15 @@ Prefab:
         type: 2}
       propertyPath: m_Color.b
       value: 0.1397059
+      objectReference: {fileID: 0}
+    - target: {fileID: 114912248822213072, guid: 53cfb50ad77ea0d44821ce50f393c4bf,
+        type: 2}
+      propertyPath: maxDis
+      value: 0.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
@@ -2021,6 +2030,10 @@ Prefab:
       propertyPath: m_Name
       value: player4
       objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
   m_IsPrefabParent: 0
@@ -2056,6 +2069,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -2095,7 +2109,7 @@ Transform:
   m_GameObject: {fileID: 1935801440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.02, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8523257, y: 0.8523257, z: 0.8523257}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -2174,6 +2188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: 0
+  gameState: 1
+  shouldCheckState: 0
   allPlayers:
   - {fileID: 1801673579}
   - {fileID: 424556971}
@@ -2189,6 +2205,7 @@ MonoBehaviour:
   - {fileID: 1801673579}
   playersTeam2:
   - {fileID: 0}
+  ball: {fileID: 1935801440}
   index: 0
   startPos: []
   team1Score: 0
@@ -2196,6 +2213,8 @@ MonoBehaviour:
   yellowTeamScore: {fileID: 1591818828}
   redTeamScore: {fileID: 2129887697}
   goalHappen: 0
+  gameMode: 0
+  AplayerIsMoving: 0
 --- !u!4 &1979247615
 Transform:
   m_ObjectHideFlags: 0
@@ -2266,6 +2285,10 @@ Prefab:
     - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
       propertyPath: m_Name
       value: player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654550277493116, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}
+      propertyPath: m_TagString
+      value: team1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53cfb50ad77ea0d44821ce50f393c4bf, type: 2}

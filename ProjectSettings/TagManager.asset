@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - player1
-  - player2
   - left
   - team2Gate
   - team1Gate
+  - team1
+  - team2
   layers:
   - Default
   - TransparentFX

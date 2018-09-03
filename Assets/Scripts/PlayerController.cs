@@ -7,14 +7,11 @@ public class PlayerController : MonoBehaviour {
     public GameObject helperBegin;
     public GameObject helperEnd;
 
-    public float currentDistance;
-    
+    public float currentDistance;   
     public float maxDis;
-
     float safeDis;
 
     public float pwr;
-
     Vector3 shootDirectionVector;
 
     public GameObject arrowPlane;
@@ -23,56 +20,113 @@ public class PlayerController : MonoBehaviour {
     private Ray2D ray;
 
     Vector3 oldVel;
+
+    bool shoot;
+    Rigidbody2D playerBody;
+    bool canShoot;
+
     void Start()
     {
-        
+        playerBody = GetComponent<Rigidbody2D>();
+        canShoot = false;
     }
 
-    void UpDate()
+    void Update()
     {
-        
+        checkSpeed();
+
+        if(GameManager.refrence.gameState == GameManager.GameState.frozen)
+        {
+            if (transform.tag == "team1" && GameManager.refrence.turn == GameManager.Turn.team1) {
+                canShoot = true;
+            }
+            else if(transform.tag == "team2" && GameManager.refrence.turn == GameManager.Turn.team2)
+            {
+                canShoot = true;
+            }else
+            {
+                canShoot = false;
+            }
+        }
     }
+
     void OnMouseDrag()
     {
-        arrowPlane.SetActive(true);
-        currentDistance = Vector3.Distance(helperBegin.transform.position, transform.position);
-
-        if(currentDistance<= maxDis)
+        if (GameManager.refrence.gameMode == GameManager.Mode.pvp || GameManager.refrence.gameMode == GameManager.Mode.pvc)
         {
-            safeDis = currentDistance;
+            if (GameManager.refrence.gameState != GameManager.GameState.moving)
+            {
+                if (canShoot)
+                {
+                    arrowPlane.SetActive(true);
+                    currentDistance = Vector3.Distance(helperBegin.transform.position, transform.position);
+
+                    if (currentDistance <= maxDis)
+                    {
+                        safeDis = currentDistance;
+                    }
+                    else
+                    {
+                        safeDis = maxDis;
+                    }
+
+                    pwr = Mathf.Abs(safeDis) * 12;
+
+                    manageArrowTransform();
+                    //castRay();
+                    //helperEnd
+
+                    Vector3 dxy = helperBegin.transform.position - transform.position;
+                    float diff = dxy.magnitude;
+                    helperEnd.transform.position = transform.position + ((dxy / diff) * currentDistance * -1);
+
+                    helperEnd.transform.position = new Vector3(helperEnd.transform.position.x, helperEnd.transform.position.y, -0.5f);
+                    //helperEnd
+
+
+                    shootDirectionVector = Vector3.Normalize(helperBegin.transform.position - transform.position);
+
+                    Vector3 targetDir = (-1) * (helperBegin.transform.position - transform.position);
+                    float angle = Vector3.Angle(transform.right, targetDir);
+                    //print(angle);
+                }
+            }
         }
-        else
-        {
-            safeDis = maxDis;
-        }
-
-        pwr = Mathf.Abs(safeDis) * 12;
-
-        manageArrowTransform();
-        //castRay();
-        //helperEnd
-
-        Vector3 dxy = helperBegin.transform.position - transform.position;
-        float diff = dxy.magnitude;
-        helperEnd.transform.position = transform.position + ((dxy / diff) * currentDistance * -1);
-
-        helperEnd.transform.position = new Vector3(helperEnd.transform.position.x,helperEnd.transform.position.y,-0.5f);
-        //helperEnd
-
-
-        shootDirectionVector = Vector3.Normalize(helperBegin.transform.position - transform.position);
-
-        Vector3 targetDir =(-1)*( helperBegin.transform.position - transform.position);
-        float angle = Vector3.Angle( transform.right , targetDir);
-        //print(angle);
-
     }
 
     void OnMouseUp()
     {
-        arrowPlane.SetActive(false);
-        Vector3 outPower = shootDirectionVector * pwr * -1;
-        GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+        if (GameManager.refrence.gameState != GameManager.GameState.moving)
+        {
+            if (canShoot)
+            {
+                GameManager.refrence.gameState = GameManager.GameState.moving;
+                shoot = true;
+                for (int i = 0; i < GameManager.refrence.allPlayers.Length; i++)
+                {
+                    GameManager.refrence.allPlayers[i].transform.GetChild(0).gameObject.SetActive(false);
+                }                
+                arrowPlane.SetActive(false);
+                Vector3 outPower = shootDirectionVector * pwr * -1;
+                GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+            }
+        }
+    }
+
+
+    void checkSpeed()
+    {
+        if (shoot)
+        {
+            if(playerBody.velocity.magnitude < .1f)
+            {
+                print("player stoped");
+                playerBody.velocity = Vector2.zero;
+                shoot = false;
+                //GameManager.refrence.checkGameState();
+                GameManager.refrence.shouldCheckState = true;
+            }
+        }
     }
 
     void manageArrowTransform()
@@ -191,5 +245,49 @@ public class PlayerController : MonoBehaviour {
             GetComponent<Rigidbody2D>().velocity =  2 * GetComponent<Rigidbody2D>().velocity;
 
         }*/
+    }
+
+    public void activePlayer()
+    {
+        //if (GameManager.refrence.gameState == GameManager.GameState.frozen)
+        {
+            if (transform.tag == "team1" && GameManager.refrence.turn == GameManager.Turn.team1)
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+                GetComponent<Animator>().SetTrigger("active");
+            }
+            else if (transform.tag == "team2" && GameManager.refrence.turn == GameManager.Turn.team2)
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+                GetComponent<Animator>().SetTrigger("active");
+            }
+            else
+            {
+                transform.GetChild(0).gameObject.SetActive(false);
+                //transform.GetChild(0).gameObject.GetComponent<Animator>().SetTrigger("active");
+            }
+        }
+    }
+
+    public void deActivePlayer()
+    {
+        //if (GameManager.refrence.gameState == GameManager.GameState.frozen)
+        {
+            if (transform.tag == "team1" && GameManager.refrence.turn == GameManager.Turn.team1)
+            {
+                transform.GetChild(0).gameObject.SetActive(false);
+                //GetComponent<Animator>().SetTrigger("active");
+            }
+            else if (transform.tag == "team2" && GameManager.refrence.turn == GameManager.Turn.team2)
+            {
+                transform.GetChild(0).gameObject.SetActive(false);
+                //GetComponent<Animator>().SetTrigger("active");
+            }
+            else
+            {
+                //transform.GetChild(0).gameObject.SetActive(false);
+                //transform.GetChild(0).gameObject.GetComponent<Animator>().SetTrigger("active");
+            }
+        }
     }
 }

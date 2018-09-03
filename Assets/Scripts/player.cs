@@ -32,7 +32,7 @@ public class player : MonoBehaviour {
         {
             if (canRotate)
             {
-                if (GameManager.refrence.turn == GameManager.Turn.player1)
+                if (GameManager.refrence.turn == GameManager.Turn.team1)
                 {
                     if (transform.tag == "player1")
                     {
