@@ -43,4 +43,28 @@ public class Ball : MonoBehaviour {
             }
         }
     }
+
+    void OnTriggerEnter2D(Collider2D target)
+    {
+        if (!GameManager.refrence.goalHappen)
+        {
+            if (target.transform.tag == "team1Gate")
+            {
+                //GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                //transform.position = startPos;
+                GameManager.refrence.goalHappen = true;
+                //GameManager.refrence.team2Score++;
+                StartCoroutine( GameManager.refrence.Goal(2));
+
+            }
+            else if (target.transform.tag == "team2Gate")
+            {
+                //GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                //transform.position = startPos;
+                GameManager.refrence.goalHappen = true;
+                //GameManager.refrence.team1Score++;
+                StartCoroutine( GameManager.refrence.Goal(1));
+            }
+        }
+    }
 }

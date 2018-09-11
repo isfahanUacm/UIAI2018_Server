@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public GameObject[] playersTeam1;
     public GameObject[] playersTeam2;
     public GameObject ball;
+    Vector3 ballStartPos;
     public int index;
 
     public Vector3[] startPos;
@@ -31,6 +32,14 @@ public class GameManager : MonoBehaviour {
 
     public bool AplayerIsMoving;
 
+    public AudioSource crowed;
+    //public AudioClip[] crowedClips;
+    public AudioSource bgMusic;
+    public AudioSource GoalVoice;
+    public AudioSource GoalCrowed;
+    public AudioSource ballAndPlayers;
+    public AudioSource soot;
+
     void Awake()
     {
         if (refrence == null)
@@ -43,6 +52,7 @@ public class GameManager : MonoBehaviour {
             startPos[i] = allPlayers[i].transform.position;
         }
         team1Score = team2Score = 0;
+        ballStartPos = ball.transform.position;
     }
 
     void Start() {
@@ -52,6 +62,8 @@ public class GameManager : MonoBehaviour {
         {
             allPlayers[i].GetComponent<PlayerController>().activePlayer();
         }
+        //crowed.clip = crowedClips[0];
+        crowed.Play();
     }
 
 
@@ -100,23 +112,44 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Goal(int index)
+    public IEnumerator Goal(int index)
     {
-        if(index == 1)
+        shouldCheckState = false;
+        crowed.Stop();
+        GoalCrowed.Play();
+        GoalVoice.Play();
+        if (index == 1)
         {
             team1Score++;
             yellowTeamScore.text ="yellow : "+ team1Score.ToString();
+            turn = Turn.team1;
         }else if(index == 2)
         {
             team2Score++;
             redTeamScore.text = "red : " + team2Score.ToString();
+            turn = Turn.team2;
+
         }
+        
+        yield return new WaitForSeconds(3f);
         for (int i = 0; i < 10; i++)
         {
             allPlayers[i].GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             allPlayers[i].transform.position = startPos[i];
         }
+        for (int i = 0; i < allPlayers.Length; i++)
+        {
+            allPlayers[i].GetComponent<PlayerController>().activePlayer();
+        }
+        ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        ball.transform.position = ballStartPos;
         goalHappen = false;
+        GoalCrowed.Stop();
+        GoalVoice.Stop();
+        crowed.Play();
+        soot.Play();
+        gameState = GameState.frozen;
+        shouldCheckState = true;
     }
 
 
