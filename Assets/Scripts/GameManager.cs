@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public enum Turn { team1, team2 };
     public Turn turn;
-    public enum GameState { moving, frozen };
+    public enum GameState { moving, frozen , goalHappend };
     public GameState gameState;
     public bool shouldCheckState;
 
@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour {
     public Text redTeamScore;
     public bool goalHappen = false;
 
-    public enum Mode { pvp, pvc, cvc }; // player vs player or player vs code or code vs code
-    public Mode gameMode;
+    //public enum Mode { pvp, pvc, cvc }; // player vs player or player vs code or code vs code
+    //public Mode gameMode;
 
     public bool AplayerIsMoving;
 
@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour {
     public AudioSource ballAndPlayers;
     public AudioSource soot;
 
+    Vector2 direction;    
+    public GameObject test;
+    public int ID;
+    public int angle;
+    public float power;
     void Awake()
     {
         if (refrence == null)
@@ -69,7 +74,10 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         checkGameState();
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot(ID, angle, power);
+        }
     }
 
     public void checkGameState()
@@ -115,6 +123,7 @@ public class GameManager : MonoBehaviour {
     public IEnumerator Goal(int index)
     {
         shouldCheckState = false;
+        gameState = GameState.goalHappend;
         crowed.Stop();
         GoalCrowed.Play();
         GoalVoice.Play();
@@ -122,12 +131,12 @@ public class GameManager : MonoBehaviour {
         {
             team1Score++;
             yellowTeamScore.text ="yellow : "+ team1Score.ToString();
-            turn = Turn.team1;
+            turn = Turn.team2;
         }else if(index == 2)
         {
             team2Score++;
             redTeamScore.text = "red : " + team2Score.ToString();
-            turn = Turn.team2;
+            turn = Turn.team1;
 
         }
         
@@ -150,6 +159,25 @@ public class GameManager : MonoBehaviour {
         soot.Play();
         gameState = GameState.frozen;
         shouldCheckState = true;
+    }
+
+    public void Shoot(int ID , float angle , float pwr)
+    {
+        // shoot player[ID] with pwr power in direction of angle
+        if (turn== Turn.team1)
+        {
+
+            playersTeam1[ID-1].GetComponent<PlayerController>().Shoot(angle, pwr);
+        }
+        else if (turn == Turn.team2)
+        {
+
+            playersTeam2[ID-1].GetComponent<PlayerController>().Shoot(angle, pwr);
+        }
+
+
+
+
     }
 
 

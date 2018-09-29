@@ -19,10 +19,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
-  m_MinSize: {x: 1009, y: 350}
-  m_MaxSize: {x: 26004, y: 14000}
+  m_MinSize: {x: 1009, y: 371}
+  m_MaxSize: {x: 26004, y: 14021}
   vertical: 1
-  controlID: 19135
+  controlID: 5788
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -43,9 +43,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 865
+    x: 642
     y: 92
-    width: 156
+    width: 381
     height: 477
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 1
@@ -56,10 +56,10 @@ MonoBehaviour:
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
-    m_HBaseRangeMin: -240
-    m_HBaseRangeMax: 240
-    m_VBaseRangeMin: -400
-    m_VBaseRangeMax: 400
+    m_HBaseRangeMin: -400
+    m_HBaseRangeMax: 400
+    m_VBaseRangeMin: -240
+    m_VBaseRangeMax: 240
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -76,25 +76,25 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 17
-      width: 156
+      width: 381
       height: 460
-    m_Scale: {x: 0.325, y: 0.325}
-    m_Translation: {x: 78, y: 230}
+    m_Scale: {x: 0.47625, y: 0.47625}
+    m_Translation: {x: 190.5, y: 230}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -240.00002
-      y: -707.6923
-      width: 480.00003
-      height: 1415.3846
+      x: -400
+      y: -482.93964
+      width: 800
+      height: 965.8793
     m_MinimalGUI: 1
-  m_defaultScale: 0.325
+  m_defaultScale: 0.47625
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
-  m_LastWindowPixelSize: {x: 156, y: 477}
+  m_LastWindowPixelSize: {x: 381, y: 477}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000100000100
@@ -119,10 +119,10 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 731
-  m_MinSize: {x: 1009, y: 350}
-  m_MaxSize: {x: 26004, y: 14000}
+  m_MinSize: {x: 1009, y: 371}
+  m_MaxSize: {x: 26004, y: 14021}
   vertical: 0
-  controlID: 19136
+  controlID: 5789
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -175,9 +175,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 262d0000
-    m_LastClickedID: 11558
-    m_ExpandedIDs: 7afbffff00000000d62c0000
+    m_SelectedIDs: fc600000
+    m_LastClickedID: 24828
+    m_ExpandedIDs: ee00f5ff2605f5ff3006f5ff8021f7ffbc24f7ffac2df7ff8446f7ff4c53f7fff0fbfffff4ffffff00000000d02c0000b24a000060530000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -221,10 +221,10 @@ MonoBehaviour:
     y: 0
     width: 1037
     height: 731
-  m_MinSize: {x: 534, y: 350}
-  m_MaxSize: {x: 18004, y: 14000}
+  m_MinSize: {x: 534, y: 371}
+  m_MaxSize: {x: 18004, y: 14021}
   vertical: 1
-  controlID: 19137
+  controlID: 5790
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 534, y: 250}
   m_MaxSize: {x: 18004, y: 10000}
   vertical: 0
-  controlID: 19138
+  controlID: 5791
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -266,10 +266,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 641
+    width: 418
     height: 498
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 9}
   m_Panes:
   - {fileID: 9}
@@ -298,18 +298,18 @@ MonoBehaviour:
     serializedVersion: 2
     x: 224
     y: 92
-    width: 637
+    width: 414
     height: 477
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 4398.28829267421
+  lastFramingTime: 2296.644825567932
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.5867902, y: 3.8268406, z: -0.08577541}
+    m_Target: {x: 0.6005349, y: -0.8949264, z: -0.03515625}
     speed: 2
-    m_Value: {x: 1.5867902, y: 3.8268406, z: -0.08577541}
+    m_Value: {x: 0.6005349, y: -0.8949264, z: -0.03515625}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -341,9 +341,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 14.250746
+    m_Target: 6.0292907
     speed: 2
-    m_Value: 14.250746
+    m_Value: 6.0292907
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -432,12 +432,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 641
+    x: 418
     y: 0
-    width: 160
+    width: 385
     height: 498
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -457,9 +457,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 801
+    x: 803
     y: 0
-    width: 236
+    width: 234
     height: 498
   m_MinSize: {x: 230, y: 250}
   m_MaxSize: {x: 10000, y: 10000}
@@ -488,9 +488,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1025
+    x: 1027
     y: 92
-    width: 232
+    width: 230
     height: 477
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
@@ -505,20 +505,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Sfx
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Sfx
+  - Assets/Scenes
   m_LastFoldersGridSize: 16
   m_LastProjectPath: G:\Game\Game Projects\Projects\soccorStarGit
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 124d0000
-    m_LastClickedID: 19730
-    m_ExpandedIDs: 00000000bc290000124d000000ca9a3bffffff7f
+    m_SelectedIDs: 042b0000
+    m_LastClickedID: 11012
+    m_ExpandedIDs: 0000000050290000302a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -546,7 +546,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 80270000
     m_LastClickedID: 10112
-    m_ExpandedIDs: 00000000bc290000124d000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000050290000302a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -571,8 +571,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 262d0000
-    m_LastClickedInstanceID: 11558
+    m_SelectedInstanceIDs: fc600000
+    m_LastClickedInstanceID: 24828
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: e2250000bc240000465ffeff204300007e2900008e2d0000a4270000722a0000000000006c2900001a29000022700000de270000e02a0000ee280000742b00001a2b000046280000a4320000
     m_RenameOverlay:
@@ -619,8 +619,8 @@ MonoBehaviour:
     y: 498
     width: 1037
     height: 233
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_AnimEditor: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 11558
+  m_LastSelectedObjectID: -665878
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -707,7 +707,7 @@ MonoBehaviour:
   - {fileID: 19}
   - {fileID: 20}
   m_Selected: 1
-  m_LastSelected: 0
+  m_LastSelected: 2
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -759,9 +759,9 @@ MonoBehaviour:
     height: 710
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ObjectsLockedBeforeSerialization: []
-  m_InstanceIDsLockedBeforeSerialization: 262d0000
+  m_InstanceIDsLockedBeforeSerialization: 
   m_LockTracker:
-    m_IsLocked: 1
+    m_IsLocked: 0
   m_PreviewResizer:
     m_CachedPref: -160
     m_ControlHash: -371814159
@@ -786,9 +786,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1258
+    x: 1261
     y: 92
-    width: 278
+    width: 275
     height: 710
   m_PersistentViewDataDictionary: {fileID: 0}
   m_InitialOpenURL: https://public-cdn.cloud.unity3d.com/editor/production/cloud/hub

@@ -9,6 +9,8 @@ TagManager:
   - team1Gate
   - team1
   - team2
+  - wall
+  - Gate
   layers:
   - Default
   - TransparentFX

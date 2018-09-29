@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
+
+    #region Variables
 
     public GameObject helperBegin;
     public GameObject helperEnd;
 
     public float currentDistance;   
     public float maxDis;
+    public float minDis;
     float safeDis;
 
     public float pwr;
@@ -23,12 +27,20 @@ public class PlayerController : MonoBehaviour {
 
     bool shoot;
     Rigidbody2D playerBody;
-    bool canShoot;
+    public bool canShoot;
+
+    public int ID;
+    public string name;
+    public Text Name;
+
+    #endregion Variables
 
     void Start()
     {
         playerBody = GetComponent<Rigidbody2D>();
         canShoot = false;
+        Name.text = ID+"_"+ name;
+        minDis = .8f;
     }
 
     void Update()
@@ -50,9 +62,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+    #region userController
+
     void OnMouseDrag()
     {
-        if (GameManager.refrence.gameMode == GameManager.Mode.pvp || GameManager.refrence.gameMode == GameManager.Mode.pvc)
+        if (MenuManager.refrence.gameMode == MenuManager.Mode.pvp || MenuManager.refrence.gameMode == MenuManager.Mode.pvc)
         {
             if (GameManager.refrence.gameState != GameManager.GameState.moving)
             {
@@ -70,7 +85,7 @@ public class PlayerController : MonoBehaviour {
                         safeDis = maxDis;
                     }
 
-                    pwr = Mathf.Abs(safeDis) * 12;
+                    pwr = Mathf.Abs(safeDis) * 13;
 
                     manageArrowTransform();
                     //castRay();
@@ -100,18 +115,83 @@ public class PlayerController : MonoBehaviour {
         {
             if (canShoot)
             {
-                GameManager.refrence.gameState = GameManager.GameState.moving;
-                shoot = true;
-                for (int i = 0; i < GameManager.refrence.allPlayers.Length; i++)
+                if (currentDistance > minDis)
                 {
-                    GameManager.refrence.allPlayers[i].transform.GetChild(0).gameObject.SetActive(false);
-                }                
-                arrowPlane.SetActive(false);
-                Vector3 outPower = shootDirectionVector * pwr * -1;
-                GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+                    GameManager.refrence.gameState = GameManager.GameState.moving;
+                    shoot = true;
+                    for (int i = 0; i < GameManager.refrence.allPlayers.Length; i++)
+                    {
+                        GameManager.refrence.allPlayers[i].transform.GetChild(0).gameObject.SetActive(false);
+                    }
+                    arrowPlane.SetActive(false);
+                    Vector3 outPower = shootDirectionVector * pwr * -1;
+                    GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+                }else
+                {
+                    arrowPlane.SetActive(false);
+                }
+                
             }
         }
     }
+
+    #endregion userController
+
+
+    #region codeController
+    public void Shoot( float angle, float pwr)
+    {
+        // shoot player[ID] with pwr power in direction of angle
+        if (MenuManager.refrence.gameMode == MenuManager.Mode.cvc || MenuManager.refrence.gameMode == MenuManager.Mode.pvc)
+        {
+            if (GameManager.refrence.gameState != GameManager.GameState.moving)
+            {
+                if (canShoot)
+                {
+                    if (pwr > 100)
+                    {
+                        pwr = 100;
+                    }
+                    pwr = pwr / 5;
+                    if (GameManager.refrence.turn == GameManager.Turn.team1)
+                    {
+          
+                        GameManager.refrence.gameState = GameManager.GameState.moving;
+                        shoot = true;
+                        for (int i = 0; i < GameManager.refrence.allPlayers.Length; i++)
+                        {
+                            GameManager.refrence.allPlayers[i].transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        arrowPlane.SetActive(false);
+                        Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
+                        Vector3 outPower = direction * pwr;
+                        GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+                    }
+                    else if (GameManager.refrence.turn == GameManager.Turn.team2)
+                    {
+                        
+                        GameManager.refrence.gameState = GameManager.GameState.moving;
+                        shoot = true;
+                        for (int i = 0; i < GameManager.refrence.allPlayers.Length; i++)
+                        {
+                            GameManager.refrence.allPlayers[i].transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        arrowPlane.SetActive(false);
+                        angle = 180 - angle;
+                        Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
+                        Vector3 outPower = direction * pwr;
+                        GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+                    }
+                }
+            }
+        }
+
+
+
+
+    }
+
+    #endregion codeController
 
 
     void checkSpeed()
