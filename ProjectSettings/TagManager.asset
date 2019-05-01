@@ -11,6 +11,9 @@ TagManager:
   - team2
   - wall
   - Gate
+  - team1Net
+  - team2Net
+  - MenuController
   layers:
   - Default
   - TransparentFX

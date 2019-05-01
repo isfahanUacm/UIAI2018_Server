@@ -4,151 +4,187 @@ using UnityEngine;
 
 public class player : MonoBehaviour {
 
-    public float angle;
-    public float force;
-    public float friction;
-    public float mass;
-    public float a;
-    public float speed;
-    public bool move;
-    float t = 0;
-    public LineRenderer line;
+    #region Variables
 
-    private Vector2 EndRot = new Vector2(0f, 0f);
-    float rot_z;
-    Camera c;
-    public bool canRotate;
+    public GameObject helperBegin;
+    public GameObject helperEnd;
+
+    public float currentDistance;
+    public float maxDis;
+    public float minDis;
+    float safeDis;
+
+    public int factor;
+    public float pwr;
+    Vector3 shootDirectionVector;
+
+    public GameObject arrowPlane;
+
+    private RaycastHit2D hitInfo;
+    private Ray2D ray;
+
+    Vector3 oldVel;
+
+    bool shoot;
+    Rigidbody2D playerBody;
+    public bool canShoot;
+    public float angle;
+
+    Vector2 firstPos;
+    bool shouldMeasure = false;
+
+    #endregion Variables
 
     void Start()
     {
-        c = Camera.main;
-        canRotate = true;
-        //force = 0;
+        
     }
 
     void FixedUpdate()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (canRotate)
-            {
-                if (GameManager.refrence.turn == GameManager.Turn.team1)
-                {
-                    if (transform.tag == "player1")
-                    {
-                        EndRot.x = (c.ScreenToWorldPoint(Input.mousePosition)).x - transform.position.x;
-                        EndRot.y = (c.ScreenToWorldPoint(Input.mousePosition)).y - transform.position.y;
-                        rot_z = Mathf.Atan2(EndRot.x, EndRot.y) * Mathf.Rad2Deg;
-                        float angle2;
-
-                        angle2 = transform.localEulerAngles.z + 90;
-                        if (angle2 > 360)
-                        {
-                            angle2 = angle2 - 360;
-                        }
-                        angle = angle2;
-                        //print(angle2) ;
-                        transform.eulerAngles = new Vector3(0f, 0f, 180 - rot_z);
-                        float distance = Vector2.Distance(transform.position, c.ScreenToWorldPoint(Input.mousePosition));
-                        
-                        force = (250 * distance) / 1.5f;
-                        if (distance > 1.5f)
-                        {
-                            force = 250;
-                        }
-                        line.gameObject.SetActive(true);
-                        //line.gameObject.transform.position = transform.position;
-                        line.SetPosition(0, this.transform.position);
-                        Vector2 touchPos = new Vector2(c.ScreenToWorldPoint(Input.mousePosition).x, c.ScreenToWorldPoint(Input.mousePosition).y);
-                        if (distance < 1.5f) 
-                        line.SetPosition(1, touchPos);
-                        //print(force);
-                    }
-                }
-            }
+            Shoot(angle, pwr);
         }
-        shoot();
+        measureSpeed();
     }
 
-    public void ChangeDirectio()
+    #region userController
+    
+    void OnMouseDrag()
     {
-        line.gameObject.SetActive(false);
-        if (angle >= 0 && angle <= 360)
+
+        //if (canShoot)
         {
-            if (this.transform.tag == "player1")
-            {
-                //angle = angle - 90;                   
-                this.transform.localEulerAngles = new Vector3(0, 0, angle - 90);
-            }
-            else if (this.transform.tag == "player2")
-            {
-                //angle = angle + 90;
-                this.transform.localEulerAngles = new Vector3(0, 0, angle + 90);
+            arrowPlane.SetActive(true);
+            currentDistance = Vector2.Distance(helperBegin.transform.position, transform.position);
 
-            }
-            if (!move)
+            if (currentDistance <= maxDis)
             {
-                move = true;
-                //force = 300;
-            }
-
-        }
-    }
-
-
-    void shoot()
-    {
-        if (move)
-        {
-            canRotate = false;
-            //move = false;
-            float f = force + friction;
-            force = 0;
-            a = f / mass;
-            //print(Time.fixedDeltaTime);
-            speed += (a * Time.fixedDeltaTime);
-            t += Time.fixedDeltaTime;
-            if (speed >= 0)
-            {
-                //transform.position = new Vector3(X, Y, 0);
-                transform.Translate(Vector3.up * speed * Time.fixedDeltaTime);
+                safeDis = currentDistance;
             }
             else
             {
-                move = false;
-                //force = 80;
-                t = 0;
-                canRotate = true;
-                /*if (this.transform.tag == "player2")
+                safeDis = maxDis;
+            }
+
+            pwr = Mathf.Abs(safeDis) * factor; //13
+
+
+            manageArrowTransform();
+            //castRay();
+            //helperEnd
+
+            Vector3 dxy = helperBegin.transform.position - transform.position;
+            float diff = dxy.magnitude;
+            helperEnd.transform.position = transform.position + ((dxy / diff) * currentDistance * -1);
+
+            helperEnd.transform.position = new Vector3(helperEnd.transform.position.x, helperEnd.transform.position.y, -0.5f);
+            //helperEnd
+
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y, 0);
+            Vector3 hb = new Vector3(helperBegin.transform.position.x, helperBegin.transform.position.y, 0);
+            shootDirectionVector = Vector3.Normalize(hb - pos);
+            Vector2 targetDir = (-1) * (helperBegin.transform.position - transform.position);
+            angle = Vector2.Angle(transform.right, targetDir);
+            if (pos.y < hb.y)
+                angle = 360 - angle;
+
+            
+        }
+    }
+
+    void OnMouseUp()
+    {
+
+        //if (canShoot)
+        {
+            if (currentDistance > minDis)
+            {
+                shoot = true;
+                //for (int i = 0; i < GameManager.refrence.allPlayers.Length; i++)
                 {
-                    GameManager.refrence.turn = GameManager.Turn.player1;
+                    //GameManager.refrence.allPlayers[i].transform.GetChild(0).gameObject.SetActive(false);
                 }
-                else if (this.transform.tag == "player1")
-                {
-                    GameManager.refrence.turn = GameManager.Turn.player2;
-                }*/
+                Vector2 outPower = shootDirectionVector * pwr * -1;
+
+
+                arrowPlane.SetActive(false);
+                GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+            }
+            else
+            {
+                arrowPlane.SetActive(false);
+            }
+
+        }
+    }
+   
+    void manageArrowTransform()
+    {
+        //calculate position        
+        arrowPlane.transform.position = transform.position;
+
+        //calculate rotation
+        if (helperBegin.transform.position.y > transform.position.y)
+        {
+
+            Vector2 dir = (helperBegin.transform.position - transform.position);
+            float outRotation; // between 0 - 360
+
+            if (Vector2.Angle(dir, transform.right) > 90)
+                outRotation = Vector2.Angle(dir, transform.right);
+            else
+                outRotation = Vector2.Angle(dir, transform.right);
+            arrowPlane.transform.eulerAngles = new Vector3(0, 0, outRotation);
+        }
+        else if (helperBegin.transform.position.y < transform.position.y)
+        {
+            Vector2 dir = (helperBegin.transform.position - transform.position);
+            float outRotation; // between 0 - 360
+
+            if (Vector2.Angle(dir, transform.right) > 90)
+                outRotation = Vector2.Angle(dir, transform.right) * -1;
+            else
+                outRotation = Vector2.Angle(dir, transform.right) * -1;
+            arrowPlane.transform.eulerAngles = new Vector3(0, 0, outRotation);
+        }
+
+        //calculate scale
+        float scaleCoefX = Mathf.Log(2 * safeDis, 2) * 1f;
+        float scaleCoefY = Mathf.Log(2 * safeDis, 2) * .7f;
+        arrowPlane.transform.localScale = new Vector3(1 + scaleCoefX, 1 + scaleCoefY, 0.001f); //default scale
+
+    }
+
+    public void Shoot(float angle, float pwr)
+    {
+
+        shoot = true;
+        Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
+        if (pwr > 100)
+        {
+            pwr = 100;
+        }
+        Vector2 outPower = direction * (pwr * .34f);
+        print(GetComponent<Rigidbody2D>().velocity.magnitude);
+        shouldMeasure = true;
+        GetComponent<Rigidbody2D>().AddForce(outPower, ForceMode2D.Impulse);
+
+    }
+
+    void measureSpeed()
+    {
+        if (shouldMeasure)
+        {
+            float distance = Mathf.Abs(transform.position.x - firstPos.x);
+            if (distance > 1)
+            {
+                print(GetComponent<Rigidbody2D>().velocity.magnitude);
+                shouldMeasure = false;
             }
         }
     }
 
-    void shooot()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * force, ForceMode2D.Force);
-        }
-    }
-
-
-    void OnTriggerEnter2D(Collider2D target)
-    {
-        if( target.gameObject.tag == "player2")
-        {
-            print("barkhord");
-            float ff = mass * a;
-            print(ff);
-            target.gameObject.GetComponent<player>().force = 50;
-            target.gameObject.GetComponent<player>().move = true;
-        }
-    }
+    #endregion userController
 }

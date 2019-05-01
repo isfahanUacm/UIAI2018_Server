@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 01206ba3498590e468fec3a6452e4807
+timeCreated: 1541105677
+licenseType: Pro
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FFF Aquarius Bold Condensed
+  fontNames:
+  - FFF Aquarius Bold Condensed
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,11 +17,8 @@ public class Ball : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if(ballBody.velocity.magnitude < .2f)
-        {
-            ballBody.velocity = Vector2.zero;
-        }
+	void FixedUpdate() {
+
 	}
 
     void OnCollisionEnter2D(Collision2D target)
@@ -29,20 +27,18 @@ public class Ball : MonoBehaviour {
         {
             if (target.transform.tag == "team1Gate")
             {
-                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 transform.position = startPos;
                 GameManager.refrence.goalHappen = true;
-                //GameManager.refrence.team2Score++;
                 GameManager.refrence.Goal(2);
                 return;
 
             }
             if (target.transform.tag == "team2Gate")
             {
-                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 transform.position = startPos;
                 GameManager.refrence.goalHappen = true;
-                //GameManager.refrence.team1Score++;
                 GameManager.refrence.Goal(1);
                 return;
             }
@@ -69,24 +65,45 @@ public class Ball : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D target)
     {
+        if (target.transform.tag == "team1Net" || target.transform.tag == "team2Net")
+        {
+            Vector2 current_speed = this.GetComponent<Rigidbody2D>().velocity;
+            float x = current_speed.x, y = current_speed.y;
+            float len = Mathf.Sqrt(x * x + y * y);
+
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(x/len, y/len);
+        }
         if (!GameManager.refrence.goalHappen)
         {
+
             if (target.transform.tag == "team1Gate")
             {
-                //GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-                //transform.position = startPos;
                 GameManager.refrence.goalHappen = true;
-                //GameManager.refrence.team2Score++;
                 StartCoroutine( GameManager.refrence.Goal(2));
-
             }
             else if (target.transform.tag == "team2Gate")
             {
-                //GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-                //transform.position = startPos;
                 GameManager.refrence.goalHappen = true;
-                //GameManager.refrence.team1Score++;
                 StartCoroutine( GameManager.refrence.Goal(1));
+            }
+            
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D target)
+    {
+        if (target.transform.tag == "wall") //Wall bug!
+        {
+            if(GetComponent<Rigidbody2D>().velocity.magnitude == 0)
+            {
+                if(transform.position.y > 0)
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y - .1f);
+                }
+                else
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + .1f);
+                }
             }
         }
     }
